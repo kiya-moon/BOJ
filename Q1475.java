@@ -1,4 +1,4 @@
-package baekjoon;
+package study;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,10 +19,9 @@ public class Q1475 {
 		
 		List<Integer> arr = new ArrayList<>();
 		
-		int count1 = 0, count2 = 0;
-		
-		
+		int count = 0;
 		String roomNum = br.readLine();
+		
 		br.close();
 		
 		// 방 번호 배열에 넣기
@@ -32,42 +31,27 @@ public class Q1475 {
 			arr.add(roomNum.charAt(i)-'0');
 		}
 		
-		// 방 번호에 9나 6이 있으면 빼기
-		// 배열은 앞칸이 비면 뒤에 숫자가 앞으로 오므로, 제거할 때는 뒤에서부터! 
-		int countNine=0;
-		int countSix=0;
-		for (int i = arr.size()-1; i >= 0; i--) {
-//			if(arr.get(i)==9 || arr.get(i)==6) {
-//				countNine++;
-//				arr.remove(i);
-//			}
-			// 9 중복 시 제거
-			if(arr.get(i)==9) {
-				countNine++;
-				if(countNine%2==0) {
-					arr.remove(i);
-					count1++;
-				}
+		// 9와 6은 같이 쓸 수 있으므로 6으로 변경해준다.
+		for (int i = 0; i < arr.size(); i++) {
+			if(arr.get(i) == 9) {
+				arr.set(i, 6);
 			}
-			
-			// 6 중복 시 제거
-			if(arr.get(i)==6) {
-				countSix++;
-				if(countSix%2==0) {
-					arr.remove(i);
-					count1++;
-				}
-			}
-			
 		}
 		
-//		// 9 또는 6은 함께 사용 가능
-//		count1 = countNine/2;
-//		if(countNine > 1 && countNine%2 != 0) {
-//			count1++;
-//		}
+		// 두 개 마다 하나씩 지워줌
+		int temp = 0;
+		for (int i = (arr.size()-1); i >= 0; i--) {
+			if(arr.get(i) == 6) {
+				temp++;
+				if(temp%2==0) {
+					arr.remove(i);
+				}
+			}
+		}
 		
-		// 남은 숫자 하나씩 꺼내서 중복검사(hashmap 이용 -> key - value 한쌍)
+		System.out.println(arr);
+		
+		// 숫자 하나씩 꺼내서 중복검사(hashmap 이용 -> key - value 한쌍)
 		Map<Integer, Integer> map = new HashMap<>();
 		// key에 arr을 key값으로 담는만큼 반복
 		for(Integer key : arr) {
@@ -77,7 +61,7 @@ public class Q1475 {
 			// 따라서 if문 안으로 들어가 1이라는 value값을 얻는다.
 			if (value == null) {
 				map.put(key, 1);
-				// 이미 value값이 있으면, 즉 중복이면, else문으로 들어가 1이 더해진다.
+			// 이미 value값이 있으면, 즉 중복이면, else문으로 들어가 1이 더해진다.
 			} else {
 				map.put(key, value + 1);
 			}
@@ -95,7 +79,6 @@ public class Q1475 {
 		Collections.sort(arr2, Collections.reverseOrder());
 		
 		// 필요한 건 count[0]
-		// 그리고 count1과 세트가 중복이 되므로 해당 값만큼 제거해준다.
 		count = arr2.get(0);
 	
         bw.write(String.valueOf(count));

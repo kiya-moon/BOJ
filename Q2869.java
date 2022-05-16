@@ -1,4 +1,4 @@
-package baekjoon;
+package study;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,7 +19,7 @@ public class Q2869 {
 		int V = Integer.parseInt(st.nextToken());
 		br.close();
 		
-		int day = 0;
+//		int day = 0;
 //		int sum = 0;
 //		
 //		while(true) {
@@ -35,7 +35,7 @@ public class Q2869 {
 		
 		// 마지막 날은 미끄러지지 않으므로 높이에서 A미터를 빼주고(V-A) 나머지 길이는 (A-B)만큼씩 올라간다.
 		// 마지막 날을 더해준다(+1).
-		day = ((V-A)/(A-B))+1;
+		int day = ((V-A)/(A-B))+1;
 		
 		// 나머지가 남는다면 올라갈 높이가 남은 것이므로 하루를 더해준다(day++).
 		if(((V-A)%(A-B)) != 0) {
